@@ -11,6 +11,7 @@ AI-Hub json 에서 표지판만 잘라내 클래스별 폴더로 저장한다.
 
 import argparse
 import json
+import random
 from collections import Counter
 from pathlib import Path
 
@@ -21,6 +22,7 @@ import config
 MIN_SIZE = 24        # bbox 짧은 변이 이보다 작으면 버린다 (뭉개져서 못 알아본다)
 MAX_PER_CLASS = 800  # 클래스 불균형 완화
 PADDING = 0.1        # 테두리 안 잘리게 여유
+SEED = 42
 
 
 def load_boxes(json_path):
@@ -76,7 +78,23 @@ def main():
     print(f"원본 이미지 {len(index):,}장")
 
     json_files = sorted(args.json_dir.rglob("*.json"))
-    print(f"annotation {len(json_files):,}개\n")
+
+    # 반드시 섞어야 한다.
+    #
+    # 파일명이 s01000200, s01000201... 처럼 촬영 순서다.
+    # 정렬 순서 그대로 훑으면서 클래스당 800장에서 끊으면 이렇게 된다:
+    #   circle_red      (27,958장 존재) → 앞쪽 10% 구간에서 800장을 다 채우고 멈춤
+    #   rectangle_blue  ( 2,904장 존재) → 거의 전 구간을 훑어야 겨우 채워짐
+    #
+    # 결과적으로 클래스마다 '다른 주행 구간'에서 뽑히게 된다.
+    # 그러면 모델이 표지판 모양이 아니라 그 구간의 배경/조명/날씨를 보고
+    # 클래스를 맞힐 수 있다. 정확도는 높게 나오는데 실제로는 아무것도 배운 게 아니다.
+    #
+    # 섞으면 모든 클래스가 전체 구간에서 고르게 뽑힌다.
+    # seed 를 고정해서 다시 돌려도 같은 데이터가 나오게 한다.
+    random.Random(SEED).shuffle(json_files)
+
+    print(f"annotation {len(json_files):,}개 (seed={SEED} 로 섞음)\n")
 
     saved = Counter()
 
