@@ -17,7 +17,7 @@ from tensorflow import keras
 import config
 from src.keras_impl.models import build_model
 
-BATCH_SIZE = 64
+BATCH_SIZE = 32
 EPOCHS = 20
 LEARNING_RATE = 1e-3
 SEED = 42

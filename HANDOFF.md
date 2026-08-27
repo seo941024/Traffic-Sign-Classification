@@ -116,11 +116,12 @@ python train_torch.py
 
 3080 10GB 기준.
 
-**batch 16 은 너무 작다.** 이 모델들은 제일 큰 DNN 도 15MB 이고 입력이 32×32 라
-VRAM 을 거의 안 쓴다. **64~128 로 올려라.** 16 으로 하면 GPU 가 놀면서
-iteration 수만 늘어나 학습이 쓸데없이 오래 걸린다.
+**batch 는 그 PC 에서 실제로 돌려보고 정한다.**
+`train_keras.py` / `train_torch.py` 상단의 `BATCH_SIZE` 를 고치면 된다 (현재 32).
 
-`train_keras.py` / `train_torch.py` 상단의 `BATCH_SIZE` 를 고치면 된다.
+이론상으로는 이 모델들이 작아서(제일 큰 DNN 도 15MB, 입력 32×32) VRAM 여유가 많지만,
+실제 속도는 데이터 로딩·드라이버·다른 프로세스 등에 따라 달라진다.
+**과거에 그 PC 에서 잘 나왔던 값이 있으면 그걸 먼저 써라.**
 
 **epoch 은 고정 숫자로 정하지 마라.** 코드에 early stopping 이 들어 있다
 (val loss 가 5 epoch 연속 안 좋아지면 자동 중단). 기본 20 으로 두고
@@ -354,7 +355,7 @@ batch, lr, epoch, optimizer, seed 전부 동일해야 한다.
 [ ] tar 압축 해제
 [ ] python prepare_data.py 실행
 [ ] 🔴 crop 폴더 눈으로 확인
-[ ] BATCH_SIZE 를 64~128 로 조정
+[ ] BATCH_SIZE 확인 (현재 32)
 [ ] python train_keras.py --epochs 3  (빠른 확인)
 [ ] python train_keras.py / python train_torch.py  (본 실행)
 [ ] 결과 분석 — 형태 오류 vs 색상 오류 나눠서 보기
