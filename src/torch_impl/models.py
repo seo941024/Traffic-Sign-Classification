@@ -8,7 +8,6 @@ PyTorch 를 쓰는 이유:
     forward() 에 데이터 흐름이 그대로 코드로 적혀 있다.
     어느 줄에서 텐서 모양이 어떻게 변하는지 눈으로 따라갈 수 있고,
     forward hook 을 걸면 실행 중 실제 shape 를 그대로 뽑아낼 수 있다.
-    (→ src/analysis/model_stats.py 의 collect_torch_stats)
 """
 
 from __future__ import annotations
