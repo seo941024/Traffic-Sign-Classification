@@ -1,0 +1,42 @@
+# 검증 완료된 버전 조합 (2026-08-27, Windows 11 + RTX 4060 에서 실제 동작 확인)
+# 전체 58개 패키지 목록은 requirements.lock.txt 참고.
+#
+# ─────────────────────────────────────────────────────────────
+# Python 3.12 를 써라. 3.13+ 는 안 된다.
+#   Python 3.14 에서 TensorFlow 설치 불가 (cp314 휠이 존재하지 않음).
+#   실측 확인:
+#     × No solution found when resolving dependencies:
+#       ╰─▶ Because all versions of tensorflow have no wheels with a
+#           matching Python ABI tag (e.g., `cp314`)
+# ─────────────────────────────────────────────────────────────
+
+# --- PyTorch (GPU 학습용) ---
+# 아래 두 줄을 그냥 pip install 하면 CPU 전용 빌드가 깔린다.
+# 반드시 PyTorch 인덱스를 지정해라:
+#
+#   pip install torch==2.5.1 torchvision==0.20.1 \
+#       --index-url https://download.pytorch.org/whl/cu121
+#
+# 설치 후 확인 (2.5.1+cu121 True 가 나와야 한다):
+#   python -c "import torch; print(torch.__version__, torch.cuda.is_available())"
+torch==2.5.1
+torchvision==0.20.1
+
+# --- TensorFlow / Keras (구조 비교·교차 검증용) ---
+# 주의: TF 2.11+ 는 Windows 네이티브에서 GPU 를 지원하지 않는다.
+# 이 프로젝트에서 Keras 는 CPU 로 충분하다. GPU 학습은 PyTorch 로 한다.
+# 단, PyTorch(GPU) 와 Keras(CPU) 의 학습 시간을 직접 비교하면 안 된다.
+tensorflow==2.21.0
+keras==3.15.1
+
+# --- 데이터 / 이미지 ---
+numpy==2.5.2
+pillow==12.3.0
+pandas==3.0.5
+
+# --- 평가 / 시각화 ---
+scikit-learn==1.9.0
+matplotlib==3.11.1
+
+# --- 유틸 ---
+tqdm==4.70.0

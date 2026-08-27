@@ -1,0 +1,39 @@
+# 데이터는 절대 커밋하지 않는다. AI-Hub 원본은 별도 드라이브에 있다.
+# 루트에만 적용 — src/data/ 같은 코드 폴더는 건드리지 않는다.
+/dataset/
+/data/
+*.jpg
+*.jpeg
+*.png
+*.bmp
+
+# manifest CSV 는 절대경로를 담고 있어서 다른 PC 에서 그대로 쓸 수 없다.
+# 다만 "어떤 분할을 썼는지"는 실험 재현에 중요하므로,
+# 최종 실험에 쓴 manifest 는 예외적으로 커밋하는 것을 고려해라.
+manifests/
+
+# 학습 산출물
+checkpoints/
+*.pth
+*.pt
+*.h5
+*.keras
+results/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+env/
+
+# 노트북
+.ipynb_checkpoints/
+
+# 에디터 / OS
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
+
