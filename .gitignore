@@ -37,3 +37,6 @@ env/
 Thumbs.db
 desktop.ini
 
+
+# 데이터 zip
+*.zip

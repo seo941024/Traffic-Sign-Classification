@@ -5,14 +5,17 @@ PyTorch(src/torch_impl/models.py)와 Keras(src/keras_impl/models.py)가
 이 값을 공유해서 같은 조건의 모델을 만든다.
 """
 
-# 분류할 클래스. 필요에 맞게 바꿔서 쓴다.
+# 분류할 클래스. 표지판코드분류 crop 데이터의 상위 10개 코드.
+# (build_dataset.py 가 crop/<코드>/ 로 만들어 둔 폴더 이름과 일치해야 한다.
+#  ImageFolder / image_dataset_from_directory 가 폴더명을 정렬해 라벨 번호를 매긴다.)
+#
+#   213 좌회전금지      214 우회전금지      218 주정차금지
+#   219 주차금지        221 차높이제한      308 좌우회전(지시)
+#   309 직진및좌회전    311 유턴            322 횡단보도
+#   329 비보호좌회전
 CLASS_NAMES: list[str] = [
-    "circle_blue",
-    "circle_red",
-    "rectangle_blue",
-    "triangle_blue",
-    "triangle_red",
-    "triangle_yellow",
+    "213", "214", "218", "219", "221",
+    "308", "309", "311", "322", "329",
 ]
 NUM_CLASSES = len(CLASS_NAMES)
 
