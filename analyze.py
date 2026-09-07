@@ -126,12 +126,14 @@ def main():
     fig.tight_layout(); fig.savefig(f"{OUT}/curves.png", dpi=130)
     print(f"saved {OUT}/curves.png")
 
-    # 2) 혼동행렬 ANN vs CNN
-    fig, ax = plt.subplots(1, 2, figsize=(17, 7))
+    # 2) 혼동행렬 ANN vs CNN  (x축 라벨 수평 → 폭 넓히고 세로도 그만큼 키움)
+    fig, ax = plt.subplots(1, 2, figsize=(24, 11))
     for a, name in zip(ax, ("ann", "cnn")):
         cm = confusion_matrix(y_true, preds[name], normalize="true")
         ConfusionMatrixDisplay(cm, display_labels=label_ko).plot(
-            ax=a, colorbar=False, values_format=".2f", cmap="Blues", xticks_rotation=45)
+            ax=a, colorbar=False, values_format=".2f", cmap="Blues", xticks_rotation=0)
+        a.tick_params(axis="x", labelsize=9)
+        a.tick_params(axis="y", labelsize=9)
         acc = (preds[name] == y_true).mean()
         a.set_title(f"{name.upper()}  (val acc {acc:.3f})")
     fig.suptitle("혼동행렬 (행=정답, 열=예측, 행 정규화)")
