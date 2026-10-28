@@ -46,3 +46,6 @@ HANDOFF*.md
 _rerun_*.txt
 _verify.py
 *.pptx
+
+# README 그림은 예외로 추적
+!docs/images/*.png
