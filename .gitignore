@@ -40,3 +40,9 @@ desktop.ini
 
 # 데이터 zip
 *.zip
+# 작업용 파일 (PC에만 보관)
+.claude/
+HANDOFF*.md
+_rerun_*.txt
+_verify.py
+*.pptx
